@@ -63,7 +63,7 @@ cols=['Id', 'MSSubClass', 'MSZoning',  'LotArea',
        'MiscVal', 'MoSold', 'YrSold', 'SaleType',
        'SaleCondition', 'SalePrice']
 
-col_qualitative=['HeatingQC', 'KitchenQual'];
+col_qualitative=['HeatingQC', 'KitchenQual','BsmtQual','Foundation','ExterQual'];
 
 #update qualitative column data
 for col_name in col_qualitative:
@@ -188,12 +188,13 @@ most_effective_dummy_cols = df_train.corr()[df_train.corr().SalePrice>.35].index
 #pd.DataFrame(pd.concat([df_train.col_Fin, df_train.SalePrice],ignore_index=False, axis=1)).corr() --get corr between two variables
 
 #col_NoSeWa - no improvement
+#, 'col_Foundation-PConc' --Local score improved bu Kaggle LB went down
 
 cols_test=['LotAreaLOG','PoolArea', 'StreetEn', 'MSSubClass', 'MSZoningEn', 'OverallQual','YearBuilt','YearRemodAdd'
 ,'1stFlrSF','GrLivArea','FullBath','TotRmsAbvGrd','Fireplaces','MasVnrArea','GarageCars','TotalBsmtSF', 'BsmtFinSF1'
 ,'GarageQualEn', 'GrLivAreaSQ'
 ,'LotFrontage','LotShapeEn','WoodDeckSF','BsmtUnfSF','HalfBath', 'col_FR2', 'col_New','col_WD', 'col_Normal'
-,'col_HeatingQC-Ex','col_KitchenQual-Ex'
+,'col_HeatingQC-Ex','col_KitchenQual-Ex','col_BsmtQual-Ex'
 ]
 
 #cols_test = cols_test + most_effective_dummy_cols
