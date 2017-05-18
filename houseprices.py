@@ -195,8 +195,8 @@ most_effective_dummy_cols = df_train.corr()[df_train.corr().SalePrice>.35].index
 cols_test=['LotAreaLOG','PoolArea', 'StreetEn', 'MSSubClass', 'MSZoningEn', 'OverallQual','YearBuilt','YearRemodAdd'
 ,'1stFlrSF','GrLivArea','FullBath','TotRmsAbvGrd','Fireplaces','MasVnrArea','GarageCars','TotalBsmtSF', 'BsmtFinSF1'
 ,'GarageQualEn', 'GrLivAreaSQ'
-,'LotFrontage','LotShapeEn','WoodDeckSF','BsmtUnfSF','HalfBath', 'col_FR2', 'col_New','col_WD', 'col_Normal'
-,'col_HeatingQC-Ex','col_KitchenQual-Ex','col_BsmtQual-Ex','col_HouseStyle-2Story'
+,'LotFrontage','LotShapeEn','WoodDeckSF','BsmtUnfSF','HalfBath', 
+'col_FR2', 'col_New','col_WD', 'col_Normal','col_HeatingQC-Ex','col_KitchenQual-Ex','col_BsmtQual-Ex','col_HouseStyle-2Story','col_GarageFinish-Fin'
 ]
 
 #cols_test = cols_test + most_effective_dummy_cols
