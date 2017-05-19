@@ -63,7 +63,7 @@ cols=['Id', 'MSSubClass', 'MSZoning',  'LotArea',
        'MiscVal', 'MoSold', 'YrSold', 'SaleType',
        'SaleCondition', 'SalePrice']
 
-col_qualitative=['HeatingQC', 'KitchenQual','BsmtQual','Foundation','ExterQual','GarageFinish','HouseStyle'];
+col_qualitative=['HeatingQC', 'KitchenQual','BsmtQual','Foundation','ExterQual','GarageFinish','HouseStyle','BsmtFinType1'];
 
 #update qualitative column data
 for col_name in col_qualitative:
@@ -197,6 +197,7 @@ cols_test=['LotAreaLOG','PoolArea', 'StreetEn', 'MSSubClass', 'MSZoningEn', 'Ove
 ,'GarageQualEn', 'GrLivAreaSQ'
 ,'LotFrontage','LotShapeEn','WoodDeckSF','BsmtUnfSF','HalfBath', 
 'col_FR2', 'col_New','col_WD', 'col_Normal','col_HeatingQC-Ex','col_KitchenQual-Ex','col_BsmtQual-Ex','col_HouseStyle-2Story','col_GarageFinish-Fin'
+,'col_BsmtFinType1-GLQ','col_BsmtFinType1-ALQ','col_BsmtFinType1-Unf','col_BsmtFinType1-Rec','col_BsmtFinType1-BLQ','col_BsmtFinType1-LwQ'
 ]
 
 #cols_test = cols_test + most_effective_dummy_cols
