@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn import datasets, linear_model, preprocessing
+import statsmodels.api as sm
 
 label_encoder = preprocessing.LabelEncoder();
 
@@ -191,12 +192,13 @@ most_effective_dummy_cols = df_train.corr()[df_train.corr().SalePrice>.35].index
 #, 'col_Foundation-PConc' --Local score improved bu Kaggle LB went down
 #col_ExterQual-Ex --not good
 #'col_ExterQual-Gd' --Local score improved bu Kaggle LB went down
+#,'HalfBath',  --Local score improves but no impact on Kaggle LB ; also P-value is relatively larger for this predictor
 
 cols_test=['LotAreaLOG','PoolArea', 'StreetEn', 'MSSubClass', 'MSZoningEn', 'OverallQual','YearBuilt','YearRemodAdd'
 ,'1stFlrSF','GrLivArea','FullBath','TotRmsAbvGrd','Fireplaces','MasVnrArea','GarageCars','TotalBsmtSF', 'BsmtFinSF1'
 ,'GarageQualEn', 'GrLivAreaSQ'
-,'LotFrontage','LotShapeEn','WoodDeckSF','BsmtUnfSF','HalfBath', 
-'col_FR2', 'col_New','col_WD', 'col_Normal','col_HeatingQC-Ex','col_KitchenQual-Ex','col_BsmtQual-Ex','col_HouseStyle-2Story','col_GarageFinish-Fin'
+,'LotFrontage','LotShapeEn','WoodDeckSF','BsmtUnfSF'
+,'col_FR2', 'col_New','col_WD', 'col_Normal','col_HeatingQC-Ex','col_KitchenQual-Ex','col_BsmtQual-Ex','col_HouseStyle-2Story','col_GarageFinish-Fin'
 ,'col_BsmtFinType1-GLQ','col_BsmtFinType1-ALQ','col_BsmtFinType1-Unf','col_BsmtFinType1-Rec','col_BsmtFinType1-BLQ','col_BsmtFinType1-LwQ'
 ]
 
@@ -205,6 +207,10 @@ cols_test=['LotAreaLOG','PoolArea', 'StreetEn', 'MSSubClass', 'MSZoningEn', 'Ove
 
 data_X_train=df_train[cols_test]
 data_y_train=df_train.SalePriceLOG
+
+#compute some key stats to prove H0 hypothesis is not applicable; if F-stat >1 and p-value is close to 0 then H0 can be rejected;
+results = sm.OLS(data_y_train. data_X_train).fit();
+results.summary()
 
 data_X_test = df_test[cols_test]
 
