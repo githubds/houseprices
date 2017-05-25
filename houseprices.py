@@ -103,7 +103,20 @@ df_train.loc[pd.isnull(df_train['BsmtUnfSF']),'BsmtUnfSF'] = df_train[pd.isnull(
 #to address Additive assumption associated with Linear regression
 df_train['yrsold'] = 2017-df_train.YearBuilt
 df_train['yrsoldQual'] = df_train.OverallQual*df_train.yrsold
+
+#when we see the corr() for following 2 predictors we can see there is some relationship between them;
+#hence when a new variable is created combining these two variables and include the new variable in the prediction, we see there is an impact on MSE
+#surprisingly MSE on training data increased but model did better in kaggle LB
 df_train['LotFrontage-WoodDeckSF']=df_train.LotFrontage*df_train.WoodDeckSF
+
+
+#df_train['BsmtHalfBath-FullBath']= df_train.FullBath+df_train.HalfBath --local MSE goes down but kaggle LB score goes up
+
+#when we see the corr() for following 2 predictors we can see there is some relationship between them;
+#hence when a new variable is created combining these two variables and include the new variable in the prediction, we see there is an impact on MSE; local MSE went up;
+#surprisingly MSE on training data increased but model did better in kaggle LB
+#rationale for this can be assumed as house with more bedrooms would need more bathroom; so more bathroom with more number of bathrooms will have better value;
+df_train['BedrookAbvGr-FullBath']=df_train.BedroomAbvGr*df_train.FullBath
 
 
 #create a new variable from yearbuilt to find out how many years old the property is; we will get a new quantitative variable;
@@ -129,10 +142,11 @@ df_test.loc[pd.isnull(df_test['BsmtUnfSF']),'BsmtUnfSF'] = df_test[pd.isnull(df_
 df_test['yrsold'] = 2017-df_test.YearBuilt
 df_test['yrsoldQual'] = df_test.OverallQual*df_test.yrsold
 
-#when we see the corr() for following 2 predictors we can see there is some relationship between them;
-#hence when a new variable is created combining these two variables and include the new variable in the prediction, we see there is an impact on MSE
-#surprisingly MSE on training data increased but model did better in kaggle LB
+
 df_test['LotFrontage-WoodDeckSF']=df_test.LotFrontage*df_test.WoodDeckSF
+
+#df_test['BsmtHalfBath-FullBath']= df_test.FullBath+df_test.HalfBath
+df_test['BedrookAbvGr-FullBath']=df_test.BedroomAbvGr*df_test.FullBath
 
 #########training data manupulation; new feature addition; feature removal#############
 
@@ -213,7 +227,7 @@ cols_test=['LotAreaLOG','PoolArea', 'StreetEn', 'MSSubClass', 'MSZoningEn', 'Ove
 ,'1stFlrSF','GrLivArea','FullBath','TotRmsAbvGrd','Fireplaces','MasVnrArea','GarageCars','TotalBsmtSF', 'BsmtFinSF1'
 ,'GarageQualEn', 'GrLivAreaSQ'
 ,'LotFrontage','LotShapeEn','WoodDeckSF','BsmtUnfSF'
-,'yrsoldQual','LotFrontage-WoodDeckSF'
+,'yrsoldQual','LotFrontage-WoodDeckSF','BedrookAbvGr-FullBath'
 ,'col_FR2', 'col_New','col_WD', 'col_Normal','col_HeatingQC-Ex','col_KitchenQual-Ex','col_BsmtQual-Ex','col_HouseStyle-2Story','col_GarageFinish-Fin'
 ,'col_BsmtFinType1-GLQ','col_BsmtFinType1-ALQ','col_BsmtFinType1-Unf','col_BsmtFinType1-Rec','col_BsmtFinType1-BLQ','col_BsmtFinType1-LwQ'
 ]
@@ -225,7 +239,7 @@ data_X_train=df_train[cols_test]
 data_y_train=df_train.SalePriceLOG
 
 #compute some key stats to prove H0 hypothesis is not applicable; if F-stat >1 and p-value is close to 0 then H0 can be rejected;
-results = sm.OLS(data_y_train. data_X_train).fit();
+results = sm.OLS(data_y_train, data_X_train).fit();
 results.summary()
 
 data_X_test = df_test[cols_test]
