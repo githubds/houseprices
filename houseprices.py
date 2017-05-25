@@ -103,6 +103,7 @@ df_train.loc[pd.isnull(df_train['BsmtUnfSF']),'BsmtUnfSF'] = df_train[pd.isnull(
 #to address Additive assumption associated with Linear regression
 df_train['yrsold'] = 2017-df_train.YearBuilt
 df_train['yrsoldQual'] = df_train.OverallQual*df_train.yrsold
+df_train['LotFrontage-WoodDeckSF']=df_train.LotFrontage*df_train.WoodDeckSF
 
 
 #create a new variable from yearbuilt to find out how many years old the property is; we will get a new quantitative variable;
@@ -127,6 +128,11 @@ df_test.loc[pd.isnull(df_test['BsmtUnfSF']),'BsmtUnfSF'] = df_test[pd.isnull(df_
 #to address Additive assumption associated with Linear regression
 df_test['yrsold'] = 2017-df_test.YearBuilt
 df_test['yrsoldQual'] = df_test.OverallQual*df_test.yrsold
+
+#when we see the corr() for following 2 predictors we can see there is some relationship between them;
+#hence when a new variable is created combining these two variables and include the new variable in the prediction, we see there is an impact on MSE
+#surprisingly MSE on training data increased but model did better in kaggle LB
+df_test['LotFrontage-WoodDeckSF']=df_test.LotFrontage*df_test.WoodDeckSF
 
 #########training data manupulation; new feature addition; feature removal#############
 
@@ -207,7 +213,7 @@ cols_test=['LotAreaLOG','PoolArea', 'StreetEn', 'MSSubClass', 'MSZoningEn', 'Ove
 ,'1stFlrSF','GrLivArea','FullBath','TotRmsAbvGrd','Fireplaces','MasVnrArea','GarageCars','TotalBsmtSF', 'BsmtFinSF1'
 ,'GarageQualEn', 'GrLivAreaSQ'
 ,'LotFrontage','LotShapeEn','WoodDeckSF','BsmtUnfSF'
-,'yrsoldQual'
+,'yrsoldQual','LotFrontage-WoodDeckSF'
 ,'col_FR2', 'col_New','col_WD', 'col_Normal','col_HeatingQC-Ex','col_KitchenQual-Ex','col_BsmtQual-Ex','col_HouseStyle-2Story','col_GarageFinish-Fin'
 ,'col_BsmtFinType1-GLQ','col_BsmtFinType1-ALQ','col_BsmtFinType1-Unf','col_BsmtFinType1-Rec','col_BsmtFinType1-BLQ','col_BsmtFinType1-LwQ'
 ]
