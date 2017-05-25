@@ -100,6 +100,11 @@ df_train['LotAreaLOG'] = np.log(df_train['LotArea']) # LotArea does not follow n
 df_train.loc[pd.isnull(df_train['LotFrontage']),'LotFrontage'] = df_train[pd.isnull(df_train['LotFrontage'])].apply((lambda x: fill_missing_lotfrontage([x, df_train])),axis=1)
 df_train.loc[pd.isnull(df_train['BsmtUnfSF']),'BsmtUnfSF'] = df_train[pd.isnull(df_train['BsmtUnfSF'])].apply((lambda x: fill_missing_BsmtUnfSF([x, df_train])),axis=1)
 
+#to address Additive assumption associated with Linear regression
+df_train['yrsold'] = 2017-df_train.YearBuilt
+df_train['yrsoldQual'] = df_train.OverallQual*df_train.yrsold
+
+
 #create a new variable from yearbuilt to find out how many years old the property is; we will get a new quantitative variable;
 #if you check corr, it's >52% inverse which is great
 
@@ -118,6 +123,10 @@ df_test['LotAreaLOG'] = np.log(df_test['LotArea']) # LotArea does not follow nor
 
 df_test.loc[pd.isnull(df_test['LotFrontage']),'LotFrontage'] = df_test[pd.isnull(df_test['LotFrontage'])].apply((lambda x: fill_missing_lotfrontage([x, df_test])),axis=1)
 df_test.loc[pd.isnull(df_test['BsmtUnfSF']),'BsmtUnfSF'] = df_test[pd.isnull(df_test['BsmtUnfSF'])].apply((lambda x: fill_missing_BsmtUnfSF([x, df_test])),axis=1)
+
+#to address Additive assumption associated with Linear regression
+df_test['yrsold'] = 2017-df_test.YearBuilt
+df_test['yrsoldQual'] = df_test.OverallQual*df_test.yrsold
 
 #########training data manupulation; new feature addition; feature removal#############
 
@@ -198,6 +207,7 @@ cols_test=['LotAreaLOG','PoolArea', 'StreetEn', 'MSSubClass', 'MSZoningEn', 'Ove
 ,'1stFlrSF','GrLivArea','FullBath','TotRmsAbvGrd','Fireplaces','MasVnrArea','GarageCars','TotalBsmtSF', 'BsmtFinSF1'
 ,'GarageQualEn', 'GrLivAreaSQ'
 ,'LotFrontage','LotShapeEn','WoodDeckSF','BsmtUnfSF'
+,'yrsoldQual'
 ,'col_FR2', 'col_New','col_WD', 'col_Normal','col_HeatingQC-Ex','col_KitchenQual-Ex','col_BsmtQual-Ex','col_HouseStyle-2Story','col_GarageFinish-Fin'
 ,'col_BsmtFinType1-GLQ','col_BsmtFinType1-ALQ','col_BsmtFinType1-Unf','col_BsmtFinType1-Rec','col_BsmtFinType1-BLQ','col_BsmtFinType1-LwQ'
 ]
